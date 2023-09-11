@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "eeba69eb-8dde-4782-913d-009ab10c46d8",
+		"name": "zdravcity.ru",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18331913"
+	},
+	"item": [
+		{
+			"name": "Корзина",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"добавление товара в корзину\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.updateCart.groups[0].items[0].product.name).to.eql('Кагоцел таблетки 12мг 20шт');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateCartMutation($regionID: ID!, $items: [CartItemInput!]!) {\r\n  updateCart(regionID: $regionID, items: $items) {\r\n    groups {\r\n      items {\r\n        ...CartItemFragment\r\n      }\r\n    }\r\n  }\r\n}\r\n\r\nfragment CartItemFragment on CartItem {\r\n  amount\r\n  price\r\n  quantity\r\n  product {\r\n    ...ProductShortFragment\r\n  }\r\n  totalAmount\r\n  totalDiscount\r\n  priceTypeID\r\n  isChecked\r\n  isExpirating\r\n}\r\n\r\nfragment ProductShortFragment on ProductShort {\r\n  id\r\n  alias\r\n  availableForOrder\r\n  availableForBooking\r\n  hasOnlyBookingPrices\r\n  canPayOnPickup\r\n  badges {\r\n    description\r\n    title\r\n    type\r\n    dateEnd\r\n    src\r\n    color\r\n  }\r\n  maxQuantity\r\n  expirationDate\r\n  url\r\n  image\r\n  isFavorite\r\n  priceTypeID\r\n  name\r\n  counters {\r\n    ...CountersFragment\r\n  }\r\n  brand {\r\n    alias\r\n    name\r\n  }\r\n  bitrixID\r\n  isBundle\r\n}\r\n\r\nfragment CountersFragment on Counters {\r\n  yandex {\r\n    ...YandexCountersFragment\r\n  }\r\n  advertisement {\r\n    ...AdvertisedCountersFragment\r\n  }\r\n}\r\n\r\nfragment YandexCountersFragment on YandexCounters {\r\n  items {\r\n    value\r\n    utmConfig {\r\n      key\r\n      value\r\n    }\r\n  }\r\n}\r\n\r\nfragment AdvertisedCountersFragment on AdvertisementCounters {\r\n  imps\r\n  track\r\n  creative\r\n  id\r\n  name\r\n  position\r\n}\r\n",
+						"variables": "{\r\n  \"regionID\": \"moscowregion\",\r\n  \"items\": [\r\n    {\r\n      \"productID\": \"6CE96B93-3DAD-39C8-EE05-3E30A030A486\",\r\n      \"priceTypeID\": \"1\",\r\n      \"quantity\": 1,\r\n      \"isChecked\": true\r\n    }\r\n  ]\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://zdravcity.ru/bff/query",
+					"protocol": "https",
+					"host": [
+						"zdravcity",
+						"ru"
+					],
+					"path": [
+						"bff",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Корзина",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"изменение количевства товара с помощью кнопки +\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.updatePreOrder.groups[0].items[0].quantity).to.eql(2);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "zdravcity.ru"
+					},
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "cookie",
+						"value": "BITRIX_SM_ABTEST_s1=1%7CA; _ga=GA1.2.1025975054.1685348409; _ym_uid=1655397596167416976; _ym_d=1685348409; tmr_lvid=eea204db21012e36f0e5ad208784fde9; tmr_lvidTS=1655397596818; popmechanic_sbjs_migrations=popmechanic_1418474375998%3D1%7C%7C%7C1471519752600%3D1%7C%7C%7C1471519752605%3D1; zc_v4_region-need-to-check=0; _userGUID=0:li8wejg5:uUwWekHx6kmL71nNq~DOwDjvVqueY6rk; _ymab_param=Zl-K0sOVQjx30yBXzSOd-KfJnH-vRFemulR-3UAhFzrqZYizBOqbbJpkzJPJAgovlqJj2G3A_pAhzNW42ZwDO8rhfU0; cf_clearance=7Ufpn7cruHDOsWcWeFC1e1I8f6evqj5PFtZeSjgjvw4-1685376117-0-250; _gaexp=GAX1.2.BnZrHSviRnqvdIKOpzUNDA.19616.0; __ddg1_=YS1gBWwlQLCOF9BB1qjX; advcake_track_id=231c6652-19f8-0c1e-79a3-17fd0a5a0b4e; advcake_session_id=120099af-24fa-77b3-26c8-9b4dedd22ab0; __ddgid_=11v4m6RHZF4RilwZ; __ddg2_=ZWvlwuAAh9YL918w; innerBasket=false; BITRIX_SM_LAST_CITY=1595; BITRIX_SM_ABTEST_s1=1%7CA; BITRIX_SM_OLD_FAVORITES_CHECKED=Y; BITRIX_SM_LAST_REG_CODE=moscowregion; zc_v4_region=%7B%22id%22%3A%22moscowregion%22%2C%22eima_id%22%3A%22Moscowregion%22%2C%22num%22%3A%2277%22%2C%22name%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu044c%22%2C%22lat%22%3A%2255.75222%22%2C%22lon%22%3A%2237.61556%22%2C%22long%22%3A%2237.61556%22%2C%22cityNames%22%3A%7B%22i%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%22%2C%22r%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu044b%22%2C%22p%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0435%22%7D%2C%22names%22%3A%7B%22i%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu044c%22%2C%22r%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu044b%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu0438%22%2C%22p%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0435%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu0438%22%7D%7D; _gcl_au=1.1.1235078907.1693231408; _gid=GA1.2.857574706.1694172084; _ym_isad=1; PHPSESSID=cR0tS2SlZcyhzriCP8mUwwMG5YnWK7g6; _sp_ses.a93b=*; _ym_visorc=w; dSesn=35377e1c-442b-4cd4-4395-b063d01e7151; _dvs=0:lmam45cn:cPyqqdUZ8KnG0OPOEr~lVBFKMSSt3DSb; zc_v2_product_history=%5B%226CE96B93-3DAD-39C8-EE05-3E30A030A486%22%5D; digi_uc=W1sidiIsIjZDRTk2QjkzLTNEQUQtMzlDOC1FRTA1LTNFMzBBMDMwQTQ4NiIsMTY5NDE3ODYzNjQ3Ml0sWyJ2IiwiNTlBOENBQjMtMzJERS05MTZBLUNFMDUtM0UzMEEwMzBBMTAwIiwxNjk0MTc4NjA4MDk2XSxbInYiLCI5QUI5M0FDMi1DQjJELTQ0NEEtOTNGNS1FMDA2NjcwNkVCQzQiLDE2OTMwNTA5Nzg0MTRdLFsic3YiLCJDMkEyODYyQy1DMjRDLTUwOTMtMUUwNS0zMDYwRjJDMEFBMUMiLDE2OTQxNzIxMTg5NTNdLFsic3YiLCI2Q0U5NkI5My0zREFELTM5QzgtRUUwNS0zRTMwQTAzMEE0ODYiLDE2OTQxNzg2NDUyODddLFsic3YiLCJEODc1REY0Ri0zQTc2LTRCRUItODlBMS1ERjM1OEJENTUzOEEiLDE2OTM0MTM2MDA3NTFdXQ==; _dc_gtm_UA-60065697-1=1; BITRIX_SM_BASKET_V2=%5B%7B%22ID%22%3A%226CE96B93-3DAD-39C8-EE05-3E30A030A486%22%2C%22PR%22%3A525%2C%22PT%22%3A1%2C%22CNT%22%3A1%2C%22FC%22%3Atrue%2C%22FD%22%3Anull%2C%22TD%22%3Anull%7D%5D; tmr_detect=1%7C1694178729336; DIGI_CARTID=86738077154; mindboxDeviceUUID=162624d8-2641-462d-9142-d039dc7f1f21; directCrm-session=%7B%22deviceGuid%22%3A%22162624d8-2641-462d-9142-d039dc7f1f21%22%7D; _sp_id.a93b=1124c17e-6ff0-4a5a-932c-84b4e6d8351f.1693039676.10.1694178744.1694173396.ff06023a-4410-438d-81e8-50510b9c2b83.f72aa3a4-d80b-4635-9fcc-244164f4e4f4.11584ff1-ffac-4958-a9ca-d5374b023307.1694178462342.65"
+					},
+					{
+						"key": "origin",
+						"value": "https://zdravcity.ru"
+					},
+					{
+						"key": "referer",
+						"value": "https://zdravcity.ru/cart/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdatePreOrderMutation($input: PreOrderInput!) {\n  updatePreOrder(input: $input) {\n    ...PreOrderFragment\n  }\n}\n\nfragment PreOrderFragment on PreOrder {\n  step\n  groups {\n    items {\n      ...CartItemFragment\n      availableForSelect\n      isExpirating\n    }\n  }\n  total {\n    ...CartTotalFragment\n  }\n  loyalty {\n    ...LoyaltyFragment\n  }\n  options {\n    ...PreOrderOptionsFragment\n  }\n  availableOptions {\n    ...PreOrderAvailableOptionsFragment\n  }\n  deliveryParams {\n    ...DeliveryParamsFragment\n  }\n  seller {\n    name\n    address\n    number\n  }\n  pharmacy {\n    ...PharmacyFragment\n  }\n  receiveTypes {\n    type\n    isChecked\n    amount\n  }\n}\n\nfragment DeliveryParamsFragment on DeliveryParams {\n  address\n  comment\n  dateText\n}\n\nfragment CartItemFragment on CartItem {\n  amount\n  price\n  quantity\n  product {\n    ...ProductShortFragment\n  }\n  totalAmount\n  totalDiscount\n  priceTypeID\n  isChecked\n  isExpirating\n}\n\nfragment ProductShortFragment on ProductShort {\n  id\n  alias\n  availableForOrder\n  availableForBooking\n  hasOnlyBookingPrices\n  canPayOnPickup\n  badges {\n    description\n    title\n    type\n    dateEnd\n    src\n    color\n  }\n  category {\n    path\n  }\n  maxQuantity\n  expirationDate\n  url\n  image\n  isFavorite\n  priceTypeID\n  name\n  counters {\n    ...CountersFragment\n  }\n  brand {\n    alias\n    name\n  }\n  bitrixID\n  isBundle\n}\n\nfragment CountersFragment on Counters {\n  yandex {\n    ...YandexCountersFragment\n  }\n  advertisement {\n    ...AdvertisedCountersFragment\n  }\n}\n\nfragment YandexCountersFragment on YandexCounters {\n  items {\n    value\n    utmConfig {\n      key\n      value\n    }\n  }\n}\n\nfragment AdvertisedCountersFragment on AdvertisementCounters {\n  imps\n  track\n  creative\n  id\n  name\n  position\n}\n\nfragment CartTotalFragment on CartTotal {\n  amount\n  totalAmount\n  productsAmount\n  productsCount\n  discount\n  points\n  hasBookingOnlyPrices\n  needTotalPrefix\n  quantity\n  courierPrice\n  minSum\n  button {\n    available\n    message\n  }\n  hasPrescripted\n}\n\nfragment LoyaltyFragment on Loyalty {\n  type\n  selected\n  params {\n    points {\n      available\n      selected\n      count\n      error\n    }\n    promo {\n      available\n      selected\n      code\n      error\n      errorDescription\n    }\n  }\n}\n\nfragment PreOrderOptionsFragment on PreOrderOptions {\n  delivery {\n    date\n    interval\n    payment {\n      ...PaymentFragment\n    }\n    address {\n      id\n      isSelected\n      formattedAddress\n      entrance\n      office\n      floor\n      comment\n    }\n    addressError\n  }\n  pickup {\n    payment {\n      ...PaymentFragment\n    }\n  }\n}\n\nfragment PaymentFragment on Payment {\n  type\n  selected\n  email\n}\n\nfragment PreOrderAvailableOptionsFragment on PreOderAvailableOptions {\n  delivery {\n    dates {\n      id\n      text\n      label\n      selected\n      intervals {\n        id\n        text\n        price\n        isFree\n        isExpress\n        selected\n        tariffId\n      }\n    }\n    addresses {\n      id\n      isSelected\n      formattedAddress\n      entrance\n      office\n      floor\n      comment\n    }\n    paymentOptions {\n      ...PaymentFragment\n    }\n  }\n  pickup {\n    payments {\n      ...PaymentFragment\n    }\n  }\n}\n\nfragment PharmacyFragment on Pharmacy {\n  id\n  name\n  address\n  lat\n  long\n  regionID\n  city\n  district\n  street\n  home\n  building\n  office\n  phoneContract\n  addressComment\n  phones\n  categories\n  rating\n  isFavorite\n  isZdravcity\n  isFromLastOrder\n  metro {\n    name\n  }\n  term {\n    pickupDays\n    bookingDays\n  }\n  mapsComments {\n    name\n    icon\n    url\n  }\n  workingHours {\n    name\n    open\n    close\n  }\n  paymentTypes\n}\n",
+						"operationName": "UpdatePreOrderMutation",
+						"variables": "{\n  \"input\": {\n    \"items\": [\n      {\n        \"productID\": \"6CE96B93-3DAD-39C8-EE05-3E30A030A486\",\n        \"priceTypeID\": \"1\",\n        \"quantity\": 2,\n        \"isChecked\": true\n      }\n    ],\n    \"step\": \"cart\",\n    \"regionId\": \"moscowregion\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "https://zdravcity.ru/bff/query",
+					"protocol": "https",
+					"host": [
+						"zdravcity",
+						"ru"
+					],
+					"path": [
+						"bff",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Корзина",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"изменение количевства товара с помощью кнопки -\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.updatePreOrder.groups[0].items[0].quantity).to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "zdravcity.ru"
+					},
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "cookie",
+						"value": "BITRIX_SM_ABTEST_s1=1%7CA; _ga=GA1.2.1025975054.1685348409; _ym_uid=1655397596167416976; _ym_d=1685348409; tmr_lvid=eea204db21012e36f0e5ad208784fde9; tmr_lvidTS=1655397596818; popmechanic_sbjs_migrations=popmechanic_1418474375998%3D1%7C%7C%7C1471519752600%3D1%7C%7C%7C1471519752605%3D1; zc_v4_region-need-to-check=0; _userGUID=0:li8wejg5:uUwWekHx6kmL71nNq~DOwDjvVqueY6rk; _ymab_param=Zl-K0sOVQjx30yBXzSOd-KfJnH-vRFemulR-3UAhFzrqZYizBOqbbJpkzJPJAgovlqJj2G3A_pAhzNW42ZwDO8rhfU0; cf_clearance=7Ufpn7cruHDOsWcWeFC1e1I8f6evqj5PFtZeSjgjvw4-1685376117-0-250; _gaexp=GAX1.2.BnZrHSviRnqvdIKOpzUNDA.19616.0; __ddg1_=YS1gBWwlQLCOF9BB1qjX; advcake_track_id=231c6652-19f8-0c1e-79a3-17fd0a5a0b4e; advcake_session_id=120099af-24fa-77b3-26c8-9b4dedd22ab0; __ddgid_=11v4m6RHZF4RilwZ; __ddg2_=ZWvlwuAAh9YL918w; innerBasket=false; BITRIX_SM_LAST_CITY=1595; BITRIX_SM_ABTEST_s1=1%7CA; BITRIX_SM_OLD_FAVORITES_CHECKED=Y; BITRIX_SM_LAST_REG_CODE=moscowregion; zc_v4_region=%7B%22id%22%3A%22moscowregion%22%2C%22eima_id%22%3A%22Moscowregion%22%2C%22num%22%3A%2277%22%2C%22name%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu044c%22%2C%22lat%22%3A%2255.75222%22%2C%22lon%22%3A%2237.61556%22%2C%22long%22%3A%2237.61556%22%2C%22cityNames%22%3A%7B%22i%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%22%2C%22r%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu044b%22%2C%22p%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0435%22%7D%2C%22names%22%3A%7B%22i%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu044c%22%2C%22r%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu044b%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu0438%22%2C%22p%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0435%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu0438%22%7D%7D; _gcl_au=1.1.1235078907.1693231408; _gid=GA1.2.857574706.1694172084; _ym_isad=1; PHPSESSID=cR0tS2SlZcyhzriCP8mUwwMG5YnWK7g6; _sp_ses.a93b=*; _ym_visorc=w; dSesn=35377e1c-442b-4cd4-4395-b063d01e7151; _dvs=0:lmam45cn:cPyqqdUZ8KnG0OPOEr~lVBFKMSSt3DSb; zc_v2_product_history=%5B%226CE96B93-3DAD-39C8-EE05-3E30A030A486%22%5D; digi_uc=W1sidiIsIjZDRTk2QjkzLTNEQUQtMzlDOC1FRTA1LTNFMzBBMDMwQTQ4NiIsMTY5NDE3ODYzNjQ3Ml0sWyJ2IiwiNTlBOENBQjMtMzJERS05MTZBLUNFMDUtM0UzMEEwMzBBMTAwIiwxNjk0MTc4NjA4MDk2XSxbInYiLCI5QUI5M0FDMi1DQjJELTQ0NEEtOTNGNS1FMDA2NjcwNkVCQzQiLDE2OTMwNTA5Nzg0MTRdLFsic3YiLCJDMkEyODYyQy1DMjRDLTUwOTMtMUUwNS0zMDYwRjJDMEFBMUMiLDE2OTQxNzIxMTg5NTNdLFsic3YiLCI2Q0U5NkI5My0zREFELTM5QzgtRUUwNS0zRTMwQTAzMEE0ODYiLDE2OTQxNzg2NDUyODddLFsic3YiLCJEODc1REY0Ri0zQTc2LTRCRUItODlBMS1ERjM1OEJENTUzOEEiLDE2OTM0MTM2MDA3NTFdXQ==; tmr_detect=1%7C1694178729336; DIGI_CARTID=86738077154; mindboxDeviceUUID=162624d8-2641-462d-9142-d039dc7f1f21; directCrm-session=%7B%22deviceGuid%22%3A%22162624d8-2641-462d-9142-d039dc7f1f21%22%7D; BITRIX_SM_BASKET_V2=%5B%7B%22ID%22%3A%226CE96B93-3DAD-39C8-EE05-3E30A030A486%22%2C%22PR%22%3A525%2C%22PT%22%3A1%2C%22CNT%22%3A2%2C%22FC%22%3Atrue%2C%22FD%22%3Anull%2C%22TD%22%3Anull%7D%5D; _sp_id.a93b=1124c17e-6ff0-4a5a-932c-84b4e6d8351f.1693039676.10.1694178750.1694173396.ff06023a-4410-438d-81e8-50510b9c2b83.f72aa3a4-d80b-4635-9fcc-244164f4e4f4.11584ff1-ffac-4958-a9ca-d5374b023307.1694178462342.66"
+					},
+					{
+						"key": "origin",
+						"value": "https://zdravcity.ru"
+					},
+					{
+						"key": "referer",
+						"value": "https://zdravcity.ru/cart/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdatePreOrderMutation($input: PreOrderInput!) {\n  updatePreOrder(input: $input) {\n    ...PreOrderFragment\n  }\n}\n\nfragment PreOrderFragment on PreOrder {\n  step\n  groups {\n    items {\n      ...CartItemFragment\n      availableForSelect\n      isExpirating\n    }\n  }\n  total {\n    ...CartTotalFragment\n  }\n  loyalty {\n    ...LoyaltyFragment\n  }\n  options {\n    ...PreOrderOptionsFragment\n  }\n  availableOptions {\n    ...PreOrderAvailableOptionsFragment\n  }\n  deliveryParams {\n    ...DeliveryParamsFragment\n  }\n  seller {\n    name\n    address\n    number\n  }\n  pharmacy {\n    ...PharmacyFragment\n  }\n  receiveTypes {\n    type\n    isChecked\n    amount\n  }\n}\n\nfragment DeliveryParamsFragment on DeliveryParams {\n  address\n  comment\n  dateText\n}\n\nfragment CartItemFragment on CartItem {\n  amount\n  price\n  quantity\n  product {\n    ...ProductShortFragment\n  }\n  totalAmount\n  totalDiscount\n  priceTypeID\n  isChecked\n  isExpirating\n}\n\nfragment ProductShortFragment on ProductShort {\n  id\n  alias\n  availableForOrder\n  availableForBooking\n  hasOnlyBookingPrices\n  canPayOnPickup\n  badges {\n    description\n    title\n    type\n    dateEnd\n    src\n    color\n  }\n  category {\n    path\n  }\n  maxQuantity\n  expirationDate\n  url\n  image\n  isFavorite\n  priceTypeID\n  name\n  counters {\n    ...CountersFragment\n  }\n  brand {\n    alias\n    name\n  }\n  bitrixID\n  isBundle\n}\n\nfragment CountersFragment on Counters {\n  yandex {\n    ...YandexCountersFragment\n  }\n  advertisement {\n    ...AdvertisedCountersFragment\n  }\n}\n\nfragment YandexCountersFragment on YandexCounters {\n  items {\n    value\n    utmConfig {\n      key\n      value\n    }\n  }\n}\n\nfragment AdvertisedCountersFragment on AdvertisementCounters {\n  imps\n  track\n  creative\n  id\n  name\n  position\n}\n\nfragment CartTotalFragment on CartTotal {\n  amount\n  totalAmount\n  productsAmount\n  productsCount\n  discount\n  points\n  hasBookingOnlyPrices\n  needTotalPrefix\n  quantity\n  courierPrice\n  minSum\n  button {\n    available\n    message\n  }\n  hasPrescripted\n}\n\nfragment LoyaltyFragment on Loyalty {\n  type\n  selected\n  params {\n    points {\n      available\n      selected\n      count\n      error\n    }\n    promo {\n      available\n      selected\n      code\n      error\n      errorDescription\n    }\n  }\n}\n\nfragment PreOrderOptionsFragment on PreOrderOptions {\n  delivery {\n    date\n    interval\n    payment {\n      ...PaymentFragment\n    }\n    address {\n      id\n      isSelected\n      formattedAddress\n      entrance\n      office\n      floor\n      comment\n    }\n    addressError\n  }\n  pickup {\n    payment {\n      ...PaymentFragment\n    }\n  }\n}\n\nfragment PaymentFragment on Payment {\n  type\n  selected\n  email\n}\n\nfragment PreOrderAvailableOptionsFragment on PreOderAvailableOptions {\n  delivery {\n    dates {\n      id\n      text\n      label\n      selected\n      intervals {\n        id\n        text\n        price\n        isFree\n        isExpress\n        selected\n        tariffId\n      }\n    }\n    addresses {\n      id\n      isSelected\n      formattedAddress\n      entrance\n      office\n      floor\n      comment\n    }\n    paymentOptions {\n      ...PaymentFragment\n    }\n  }\n  pickup {\n    payments {\n      ...PaymentFragment\n    }\n  }\n}\n\nfragment PharmacyFragment on Pharmacy {\n  id\n  name\n  address\n  lat\n  long\n  regionID\n  city\n  district\n  street\n  home\n  building\n  office\n  phoneContract\n  addressComment\n  phones\n  categories\n  rating\n  isFavorite\n  isZdravcity\n  isFromLastOrder\n  metro {\n    name\n  }\n  term {\n    pickupDays\n    bookingDays\n  }\n  mapsComments {\n    name\n    icon\n    url\n  }\n  workingHours {\n    name\n    open\n    close\n  }\n  paymentTypes\n}\n",
+						"operationName": "UpdatePreOrderMutation",
+						"variables": "{\n  \"input\": {\n    \"items\": [\n      {\n        \"productID\": \"6CE96B93-3DAD-39C8-EE05-3E30A030A486\",\n        \"priceTypeID\": \"1\",\n        \"quantity\": 1,\n        \"isChecked\": true\n      }\n    ],\n    \"step\": \"cart\",\n    \"regionId\": \"moscowregion\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "https://zdravcity.ru/bff/query",
+					"protocol": "https",
+					"host": [
+						"zdravcity",
+						"ru"
+					],
+					"path": [
+						"bff",
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Корзина",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\" изменение количевства товара на число, превышающее наличие \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data.updatePreOrder.total.button.message).to.eql('Превышено максимальное общее количество товаров в заказе: 100 шт. Попробуйте разбить ваш заказ на несколько заказов.');\r",
+							"     pm.expect(jsonData.data.updatePreOrder.groups[0].items[0].quantity).to.eql(120);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authority",
+						"value": "zdravcity.ru"
+					},
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "accept-language",
+						"value": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json"
+					},
+					{
+						"key": "cookie",
+						"value": "BITRIX_SM_ABTEST_s1=1%7CA; _ga=GA1.2.1025975054.1685348409; _ym_uid=1655397596167416976; _ym_d=1685348409; tmr_lvid=eea204db21012e36f0e5ad208784fde9; tmr_lvidTS=1655397596818; popmechanic_sbjs_migrations=popmechanic_1418474375998%3D1%7C%7C%7C1471519752600%3D1%7C%7C%7C1471519752605%3D1; zc_v4_region-need-to-check=0; _userGUID=0:li8wejg5:uUwWekHx6kmL71nNq~DOwDjvVqueY6rk; _ymab_param=Zl-K0sOVQjx30yBXzSOd-KfJnH-vRFemulR-3UAhFzrqZYizBOqbbJpkzJPJAgovlqJj2G3A_pAhzNW42ZwDO8rhfU0; cf_clearance=7Ufpn7cruHDOsWcWeFC1e1I8f6evqj5PFtZeSjgjvw4-1685376117-0-250; _gaexp=GAX1.2.BnZrHSviRnqvdIKOpzUNDA.19616.0; __ddg1_=YS1gBWwlQLCOF9BB1qjX; advcake_track_id=231c6652-19f8-0c1e-79a3-17fd0a5a0b4e; advcake_session_id=120099af-24fa-77b3-26c8-9b4dedd22ab0; __ddgid_=11v4m6RHZF4RilwZ; __ddg2_=ZWvlwuAAh9YL918w; innerBasket=false; BITRIX_SM_LAST_CITY=1595; BITRIX_SM_ABTEST_s1=1%7CA; BITRIX_SM_OLD_FAVORITES_CHECKED=Y; BITRIX_SM_LAST_REG_CODE=moscowregion; zc_v4_region=%7B%22id%22%3A%22moscowregion%22%2C%22eima_id%22%3A%22Moscowregion%22%2C%22num%22%3A%2277%22%2C%22name%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu044c%22%2C%22lat%22%3A%2255.75222%22%2C%22lon%22%3A%2237.61556%22%2C%22long%22%3A%2237.61556%22%2C%22cityNames%22%3A%7B%22i%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%22%2C%22r%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu044b%22%2C%22p%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0435%22%7D%2C%22names%22%3A%7B%22i%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0430%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu044c%22%2C%22r%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu044b%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu0438%22%2C%22p%22%3A%22%5Cu041c%5Cu043e%5Cu0441%5Cu043a%5Cu0432%5Cu0435%20%5Cu0438%20%5Cu043e%5Cu0431%5Cu043b%5Cu0430%5Cu0441%5Cu0442%5Cu0438%22%7D%7D; _gcl_au=1.1.1235078907.1693231408; _gid=GA1.2.857574706.1694172084; _ym_isad=1; PHPSESSID=cR0tS2SlZcyhzriCP8mUwwMG5YnWK7g6; _sp_ses.a93b=*; _ym_visorc=w; dSesn=35377e1c-442b-4cd4-4395-b063d01e7151; _dvs=0:lmam45cn:cPyqqdUZ8KnG0OPOEr~lVBFKMSSt3DSb; zc_v2_product_history=%5B%226CE96B93-3DAD-39C8-EE05-3E30A030A486%22%5D; digi_uc=W1sidiIsIjZDRTk2QjkzLTNEQUQtMzlDOC1FRTA1LTNFMzBBMDMwQTQ4NiIsMTY5NDE3ODYzNjQ3Ml0sWyJ2IiwiNTlBOENBQjMtMzJERS05MTZBLUNFMDUtM0UzMEEwMzBBMTAwIiwxNjk0MTc4NjA4MDk2XSxbInYiLCI5QUI5M0FDMi1DQjJELTQ0NEEtOTNGNS1FMDA2NjcwNkVCQzQiLDE2OTMwNTA5Nzg0MTRdLFsic3YiLCJDMkEyODYyQy1DMjRDLTUwOTMtMUUwNS0zMDYwRjJDMEFBMUMiLDE2OTQxNzIxMTg5NTNdLFsic3YiLCI2Q0U5NkI5My0zREFELTM5QzgtRUUwNS0zRTMwQTAzMEE0ODYiLDE2OTQxNzg2NDUyODddLFsic3YiLCJEODc1REY0Ri0zQTc2LTRCRUItODlBMS1ERjM1OEJENTUzOEEiLDE2OTM0MTM2MDA3NTFdXQ==; tmr_detect=1%7C1694178729336; DIGI_CARTID=86738077154; mindboxDeviceUUID=162624d8-2641-462d-9142-d039dc7f1f21; directCrm-session=%7B%22deviceGuid%22%3A%22162624d8-2641-462d-9142-d039dc7f1f21%22%7D; BITRIX_SM_BASKET_V2=%5B%7B%22ID%22%3A%226CE96B93-3DAD-39C8-EE05-3E30A030A486%22%2C%22PR%22%3A525%2C%22PT%22%3A1%2C%22CNT%22%3A2%2C%22FC%22%3Atrue%2C%22FD%22%3Anull%2C%22TD%22%3Anull%7D%5D; _dc_gtm_UA-60065697-1=1; _sp_id.a93b=1124c17e-6ff0-4a5a-932c-84b4e6d8351f.1693039676.10.1694179309.1694173396.ff06023a-4410-438d-81e8-50510b9c2b83.f72aa3a4-d80b-4635-9fcc-244164f4e4f4.11584ff1-ffac-4958-a9ca-d5374b023307.1694178462342.68"
+					},
+					{
+						"key": "origin",
+						"value": "https://zdravcity.ru"
+					},
+					{
+						"key": "referer",
+						"value": "https://zdravcity.ru/cart/"
+					},
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					},
+					{
+						"key": "sec-fetch-dest",
+						"value": "empty"
+					},
+					{
+						"key": "sec-fetch-mode",
+						"value": "cors"
+					},
+					{
+						"key": "sec-fetch-site",
+						"value": "same-origin"
+					},
+					{
+						"key": "user-agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdatePreOrderMutation($input: PreOrderInput!) {\n  updatePreOrder(input: $input) {\n    ...PreOrderFragment\n  }\n}\n\nfragment PreOrderFragment on PreOrder {\n  step\n  groups {\n    items {\n      ...CartItemFragment\n      availableForSelect\n      isExpirating\n    }\n  }\n  total {\n    ...CartTotalFragment\n  }\n  loyalty {\n    ...LoyaltyFragment\n  }\n  options {\n    ...PreOrderOptionsFragment\n  }\n  availableOptions {\n    ...PreOrderAvailableOptionsFragment\n  }\n  deliveryParams {\n    ...DeliveryParamsFragment\n  }\n  seller {\n    name\n    address\n    number\n  }\n  pharmacy {\n    ...PharmacyFragment\n  }\n  receiveTypes {\n    type\n    isChecked\n    amount\n  }\n}\n\nfragment DeliveryParamsFragment on DeliveryParams {\n  address\n  comment\n  dateText\n}\n\nfragment CartItemFragment on CartItem {\n  amount\n  price\n  quantity\n  product {\n    ...ProductShortFragment\n  }\n  totalAmount\n  totalDiscount\n  priceTypeID\n  isChecked\n  isExpirating\n}\n\nfragment ProductShortFragment on ProductShort {\n  id\n  alias\n  availableForOrder\n  availableForBooking\n  hasOnlyBookingPrices\n  canPayOnPickup\n  badges {\n    description\n    title\n    type\n    dateEnd\n    src\n    color\n  }\n  category {\n    path\n  }\n  maxQuantity\n  expirationDate\n  url\n  image\n  isFavorite\n  priceTypeID\n  name\n  counters {\n    ...CountersFragment\n  }\n  brand {\n    alias\n    name\n  }\n  bitrixID\n  isBundle\n}\n\nfragment CountersFragment on Counters {\n  yandex {\n    ...YandexCountersFragment\n  }\n  advertisement {\n    ...AdvertisedCountersFragment\n  }\n}\n\nfragment YandexCountersFragment on YandexCounters {\n  items {\n    value\n    utmConfig {\n      key\n      value\n    }\n  }\n}\n\nfragment AdvertisedCountersFragment on AdvertisementCounters {\n  imps\n  track\n  creative\n  id\n  name\n  position\n}\n\nfragment CartTotalFragment on CartTotal {\n  amount\n  totalAmount\n  productsAmount\n  productsCount\n  discount\n  points\n  hasBookingOnlyPrices\n  needTotalPrefix\n  quantity\n  courierPrice\n  minSum\n  button {\n    available\n    message\n  }\n  hasPrescripted\n}\n\nfragment LoyaltyFragment on Loyalty {\n  type\n  selected\n  params {\n    points {\n      available\n      selected\n      count\n      error\n    }\n    promo {\n      available\n      selected\n      code\n      error\n      errorDescription\n    }\n  }\n}\n\nfragment PreOrderOptionsFragment on PreOrderOptions {\n  delivery {\n    date\n    interval\n    payment {\n      ...PaymentFragment\n    }\n    address {\n      id\n      isSelected\n      formattedAddress\n      entrance\n      office\n      floor\n      comment\n    }\n    addressError\n  }\n  pickup {\n    payment {\n      ...PaymentFragment\n    }\n  }\n}\n\nfragment PaymentFragment on Payment {\n  type\n  selected\n  email\n}\n\nfragment PreOrderAvailableOptionsFragment on PreOderAvailableOptions {\n  delivery {\n    dates {\n      id\n      text\n      label\n      selected\n      intervals {\n        id\n        text\n        price\n        isFree\n        isExpress\n        selected\n        tariffId\n      }\n    }\n    addresses {\n      id\n      isSelected\n      formattedAddress\n      entrance\n      office\n      floor\n      comment\n    }\n    paymentOptions {\n      ...PaymentFragment\n    }\n  }\n  pickup {\n    payments {\n      ...PaymentFragment\n    }\n  }\n}\n\nfragment PharmacyFragment on Pharmacy {\n  id\n  name\n  address\n  lat\n  long\n  regionID\n  city\n  district\n  street\n  home\n  building\n  office\n  phoneContract\n  addressComment\n  phones\n  categories\n  rating\n  isFavorite\n  isZdravcity\n  isFromLastOrder\n  metro {\n    name\n  }\n  term {\n    pickupDays\n    bookingDays\n  }\n  mapsComments {\n    name\n    icon\n    url\n  }\n  workingHours {\n    name\n    open\n    close\n  }\n  paymentTypes\n}\n",
+						"operationName": "UpdatePreOrderMutation",
+						"variables": "{\n  \"input\": {\n    \"items\": [\n      {\n        \"productID\": \"6CE96B93-3DAD-39C8-EE05-3E30A030A486\",\n        \"priceTypeID\": \"1\",\n        \"quantity\": 120,\n        \"isChecked\": true\n      }\n    ],\n    \"step\": \"cart\",\n    \"regionId\": \"moscowregion\"\n  }\n}"
+					}
+				},
+				"url": {
+					"raw": "https://zdravcity.ru/bff/query",
+					"protocol": "https",
+					"host": [
+						"zdravcity",
+						"ru"
+					],
+					"path": [
+						"bff",
+						"query"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
